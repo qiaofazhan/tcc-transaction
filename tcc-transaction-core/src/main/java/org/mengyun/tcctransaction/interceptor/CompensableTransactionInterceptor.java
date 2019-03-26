@@ -52,7 +52,7 @@ public class CompensableTransactionInterceptor {
         boolean asyncConfirm = compensable.asyncConfirm();
 
         boolean asyncCancel = compensable.asyncCancel();
-
+        // 当前线程是否在事务中
         boolean isTransactionActive = transactionManager.isTransactionActive();
 
         if (!TransactionUtils.isLegalTransactionContext(isTransactionActive, propagation, transactionContext)) {
@@ -99,6 +99,7 @@ public class CompensableTransactionInterceptor {
             transactionManager.commit(asyncConfirm);
 
         } finally {
+            //clean有2个目的：尽可能加快垃圾回收，防止threadLocal内存泄露   https://github.com/changmingxie/tcc-transaction/issues/219
             transactionManager.cleanAfterCompletion(transaction);
         }
 

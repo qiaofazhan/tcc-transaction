@@ -31,12 +31,22 @@ public class CompensableMethodUtils {
 
         if ((propagation.equals(Propagation.REQUIRED) && !isTransactionActive && transactionContext == null) ||
                 propagation.equals(Propagation.REQUIRES_NEW)) {
+            // Propagation.REQUIRES_NEW：新建事务，如果当前存在事务，把当前事务挂起
             return MethodType.ROOT;
         } else if ((propagation.equals(Propagation.REQUIRED) || propagation.equals(Propagation.MANDATORY)) && !isTransactionActive && transactionContext != null) {
+            // Propagation.REQUIRED：支持当前事务
+            // Propagation.MANDATORY：支持当前事务
             return MethodType.PROVIDER;
         } else {
             return MethodType.NORMAL;
         }
+        /*
+        事务传播级别为 Propagation.REQUIRED，并且当前没有事务。
+        事务传播级别为 Propagation.REQUIRES_NEW，新建事务，如果当前存在事务，把当前事务挂起。
+        此时，事务管理器的当前线程事务队列可能会存在多个事务。
+        计算方法类型( MethodType )的目的，可以根据不同方法类型，做不同的事务处理。
+        方法类型为 MethodType.ROOT 时，发起根事务，判断条件如下二选一：
+         */
     }
 
     public static MethodType calculateMethodType(TransactionContext transactionContext, boolean isCompensable) {

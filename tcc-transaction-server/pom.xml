@@ -93,7 +93,7 @@
                 <configuration>
                     <webResources>
                         <resource>
-                            <directory>src/main/config/${running.env}</directory>
+                            <directory>src/main/resources/config/${running.env}</directory>
                             <targetPath>WEB-INF/classes</targetPath>
                         </resource>
                     </webResources>

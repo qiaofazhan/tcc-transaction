@@ -86,21 +86,29 @@
                     <td>[#if transactionVo.transactionType??]
                             [#if transactionVo.transactionType==1]Root
                             [#else ]Branch[/#if]
-                        [/#if]
+                    [/#if]
                     </td>
                     <td>${transactionVo.retriedCount!"default-retriedCount"}</td>
                     <td>
                         <div style="width: 600px;">
                             [#if transactionVo.aggInvocation??]
                             package: <span>${transactionVo.aggInvocation.packageName}</span><br>
-                            EventHandler:  <span class="label label-primary">${transactionVo.aggInvocation.className}</span>.<span class="label label-warning">${transactionVo.aggInvocation.methodName}</span><br>
+                            EventHandler:  <span
+                                    class="label label-primary">${transactionVo.aggInvocation.className}</span>.<span
+                                    class="label label-warning">${transactionVo.aggInvocation.methodName}</span><br>
                             [/#if]
                             [#if transactionVo.tccConfimInvocation??]
                             package: <span>${transactionVo.tccConfimInvocation.packageName}</span><br>
-                            Confim:  <span class="label label-primary">${transactionVo.tccConfimInvocation.className}</span>.<span class="label label-warning">${transactionVo.tccConfimInvocation.methodName}</span><br>
+                            Confim:  <span
+                                    class="label label-primary">${transactionVo.tccConfimInvocation.className}</span>.
+                                <span class="label label-warning">${transactionVo.tccConfimInvocation.methodName}</span>
+                                <br>
                             [/#if]
                             [#if transactionVo.tccCancelInvocation??]
-                            Cancel:   <span class="label label-primary">${transactionVo.tccCancelInvocation.className}</span>.<span class="label label-warning">${transactionVo.tccCancelInvocation.methodName}</span><br>
+                            Cancel:   <span
+                                    class="label label-primary">${transactionVo.tccCancelInvocation.className}</span>.
+                                <span class="label label-warning">${transactionVo.tccCancelInvocation.methodName}</span>
+                                <br>
                             [/#if]
                         </div>
 
@@ -109,7 +117,8 @@
                             ~~显示详情~~
                         </button>
 
-                        <div id="detail-${transactionVo.globalTxId}-${transactionVo.branchQualifier}" class="collapse json-box">
+                        <div id="detail-${transactionVo.globalTxId}-${transactionVo.branchQualifier}"
+                             class="collapse json-box">
                             <script>
                                 document.getElementById('detail-${transactionVo.globalTxId}-${transactionVo.branchQualifier}').innerHTML =
                                         new JSONFormat(JSON.stringify(${transactionVo.contentView})).toString();
@@ -127,10 +136,17 @@
                         [/#if]
                     </td>
                     <td>
-                        <button class="btn btn-info btn-xs j-edit" data-url="" data-echo="">重置</button>
-                        <button class="btn btn-info btn-xs j-delete" data-url="" data-echo="">删除</button>
-                        <button class="btn btn-info btn-xs j-cancel" data-url="" data-echo="">取消</button>
-                        <button class="btn btn-info btn-xs j-confirm" data-url="" data-echo="">确认</button>
+
+
+                        [#if isdelete==0]
+                            <button class="btn btn-info btn-xs j-edit" data-url="" data-echo="">重置</button>
+                            <button class="btn btn-info btn-xs j-delete" data-url="" data-echo="">删除</button>
+                            <button class="btn btn-info btn-xs j-cancel" data-url="" data-echo="">取消</button>
+                            <button class="btn btn-info btn-xs j-confirm" data-url="" data-echo="">确认</button>
+                        [#else]
+                            <button class="btn btn-info btn-xs j-restore" data-url="" data-echo="">恢复</button>
+                        [/#if]
+
                     </td>
                 </tr>
                 [/#list]

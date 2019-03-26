@@ -31,13 +31,6 @@ public class RedPacketTradeOrderServiceImpl implements RedPacketTradeOrderServic
     @Compensable(confirmMethod = "confirmRecord", cancelMethod = "cancelRecord", transactionContextEditor = MethodTransactionContextEditor.class)
     @Transactional
     public String record(TransactionContext transactionContext, RedPacketTradeOrderDto tradeOrderDto) {
-
-        try {
-            Thread.sleep(1000l);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         System.out.println("red packet try record called. time seq:" + DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
 
         TradeOrder foundTradeOrder = tradeOrderRepository.findByMerchantOrderNo(tradeOrderDto.getMerchantOrderNo());
@@ -66,18 +59,13 @@ public class RedPacketTradeOrderServiceImpl implements RedPacketTradeOrderServic
             }
         }
 
+        //模拟异常
+        //throw new RuntimeException();
         return "success";
     }
 
     @Transactional
     public void confirmRecord(TransactionContext transactionContext, RedPacketTradeOrderDto tradeOrderDto) {
-
-        try {
-            Thread.sleep(1000l);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         System.out.println("red packet confirm record called. time seq:" + DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
 
         TradeOrder tradeOrder = tradeOrderRepository.findByMerchantOrderNo(tradeOrderDto.getMerchantOrderNo());
@@ -89,32 +77,21 @@ public class RedPacketTradeOrderServiceImpl implements RedPacketTradeOrderServic
             RedPacketAccount transferToAccount = redPacketAccountRepository.findByUserId(tradeOrderDto.getOppositeUserId());
 
             transferToAccount.transferTo(tradeOrderDto.getAmount());
-
-            redPacketAccountRepository.save(transferToAccount);
+            //模拟异常
+            throw new RuntimeException();
         }
     }
 
     @Transactional
     public void cancelRecord(TransactionContext transactionContext, RedPacketTradeOrderDto tradeOrderDto) {
-
-        try {
-            Thread.sleep(1000l);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         System.out.println("red packet cancel record called. time seq:" + DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
-
         TradeOrder tradeOrder = tradeOrderRepository.findByMerchantOrderNo(tradeOrderDto.getMerchantOrderNo());
 
         if (null != tradeOrder && "DRAFT".equals(tradeOrder.getStatus())) {
             tradeOrder.cancel();
             tradeOrderRepository.update(tradeOrder);
-
             RedPacketAccount capitalAccount = redPacketAccountRepository.findByUserId(tradeOrderDto.getSelfUserId());
-
             capitalAccount.cancelTransfer(tradeOrderDto.getAmount());
-
             redPacketAccountRepository.save(capitalAccount);
         }
     }

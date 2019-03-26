@@ -3,12 +3,15 @@ package org.mengyun.tcctransaction.server.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.mengyun.tcctransaction.server.dao.DaoRepository;
 import org.mengyun.tcctransaction.server.dao.RedisTransactionDao;
+import org.mengyun.tcctransaction.server.dao.TransactionDao;
 import org.mengyun.tcctransaction.server.dto.PageDto;
 import org.mengyun.tcctransaction.server.vo.CommonResponse;
 import org.mengyun.tcctransaction.server.vo.TransactionVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +33,10 @@ public class TransactionController {
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
+
     @Autowired
     private DaoRepository daoRepository;
+
 
     public static final Integer DEFAULT_PAGE_NUM = 1;
 

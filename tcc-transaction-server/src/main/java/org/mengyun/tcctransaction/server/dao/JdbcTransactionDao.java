@@ -4,6 +4,7 @@ package org.mengyun.tcctransaction.server.dao;
 import org.mengyun.tcctransaction.server.dto.PageDto;
 import org.mengyun.tcctransaction.server.vo.PageVo;
 import org.mengyun.tcctransaction.server.vo.TransactionVo;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.sql.DataSource;
 import javax.xml.bind.DatatypeConverter;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by cheng.zeng on 2016/9/2.
@@ -30,6 +32,8 @@ public class JdbcTransactionDao implements TransactionDao {
     private String tableSuffix;
 
     private String domain;
+
+
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -108,7 +112,7 @@ public class JdbcTransactionDao implements TransactionDao {
             String tableName = getTableName();
 
             // 如果记录有删除标记，再次删除执行真正的DELETE
-            String sql = "DELETE " + tableName +
+            String sql = "DELETE from " + tableName +
                     " WHERE GLOBAL_TX_ID = ? AND BRANCH_QUALIFIER = ? AND IS_DELETE = " + IS_DELETE;
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setBytes(1, DatatypeConverter.parseHexBinary(globalTxId));

@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
 /**
+ * 源码解析参考：https://cloud.tencent.com/developer/article/1049345
  * Created by changmingxie on 10/25/15.
  */
 @Retention(RetentionPolicy.RUNTIME)

@@ -27,14 +27,21 @@
     </bean>
 
     <bean id="captialTradeOrderService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-        <property name="serviceUrl" value="http://localhost:8081/remoting/CapitalTradeOrderService"/>
+        <property name="serviceUrl" value="http://localhost:8080/remoting/CapitalTradeOrderService"/>
         <property name="serviceInterface"
                   value="org.mengyun.tcctransaction.sample.http.capital.api.CapitalTradeOrderService"/>
         <property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor"/>
     </bean>
+    <bean id="redPacketTradeOrderService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="http://localhost:8082/remoting/RedPacketTradeOrderService"/>
+        <property name="serviceInterface"
+                  value="org.mengyun.tcctransaction.sample.http.redpacket.api.RedPacketTradeOrderService"/>
+        <property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor"/>
+    </bean>
+
 
     <bean id="capitalAccountService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-        <property name="serviceUrl" value="http://localhost:8081/remoting/CapitalAccountService"/>
+        <property name="serviceUrl" value="http://localhost:8080/remoting/CapitalAccountService"/>
         <property name="serviceInterface"
                   value="org.mengyun.tcctransaction.sample.http.capital.api.CapitalAccountService"/>
         <property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor"/>
@@ -47,11 +54,6 @@
         <property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor"/>
     </bean>
 
-    <bean id="redPacketTradeOrderService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-        <property name="serviceUrl" value="http://localhost:8082/remoting/RedPacketTradeOrderService"/>
-        <property name="serviceInterface"
-                  value="org.mengyun.tcctransaction.sample.http.redpacket.api.RedPacketTradeOrderService"/>
-        <property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor"/>
-    </bean>
+
 
 </beans>
