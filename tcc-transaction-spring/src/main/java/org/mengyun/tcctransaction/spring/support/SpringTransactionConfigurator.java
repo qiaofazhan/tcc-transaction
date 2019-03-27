@@ -7,6 +7,7 @@ import org.mengyun.tcctransaction.repository.CachableTransactionRepository;
 import org.mengyun.tcctransaction.spring.recover.DefaultRecoverConfig;
 import org.mengyun.tcctransaction.support.TransactionConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,6 +15,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by changmingxie on 11/11/15.
  */
+
 public class SpringTransactionConfigurator implements TransactionConfigurator {
 
     private static volatile ExecutorService executorService = null;
